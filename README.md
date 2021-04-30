@@ -2,7 +2,15 @@
 
 Front Interface for the background remover API
 
-## Install the dependencies
+## Starting the project
+
+Clone the repository
+
+```bash
+cd webapp
+```
+
+### Install the dependencies
 
 ```bash
 yarn install
@@ -11,5 +19,7 @@ yarn install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-quasar dev
+yarn start
 ```
+
+The project will then be available at http://localhost:8080
