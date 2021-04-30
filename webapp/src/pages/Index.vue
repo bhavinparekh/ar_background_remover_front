@@ -107,7 +107,7 @@ export default {
       formData.append("seller_url", "http://0.0.0.0:8080");
 
       axios
-        .post("http://0.0.0.0:8000/api/v1/removebg/", formData, {
+        .post("http://0.0.0.0:7000/api/v1/removebg/", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           responseType: "blob"
         })
