@@ -44,12 +44,47 @@
           </div>
         </div>
         <!-- ---------------------  END MOBILE ONLY -------------------------------------->
-        
       <!------------------------------------- ADD A PICTURE ------------------------------------------>
-
+        <div v-else class="q-pa-md">
+        <div class="q-gutter-md">
+          <q-file
+            filled
+            v-model="picture"
+            accept=".jpg, image/*"
+            label="Choose a picture"
+            @change="showPreview"
+            counter
+          >
+            <template v-slot:append>
+              <q-btn round dense flat icon="add" @click.stop />
+            </template>
+          </q-file>
+         <div v-if="previewPicture" class="col-12 q-my-lg">
+          <img
+            class=""
+            style="width : 30%"
+            :src="previewPicture"
+            alt="before ..."
+          />
+          <q-btn
+            size="sm"
+            color="primary"
+            label="send"
+            :disabled="picture === null ? true : false"
+            @click="sendPicture"
+            style="margin-bottom:180px; margin-left:20px;"
+          />
+          <img
+            v-if="updatedPicture"
+            class=""
+            style="width : 30%"
+            :src="updatedPicture"
+            alt="after ..."
+          />
+        </div>  
+        </div>
+      </div>
       <!------------------------------------------- END ---------------------------------------->
-
-
 
     </div>
   </div>
