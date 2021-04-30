@@ -2,52 +2,55 @@
   <div class="row justify-center items-center q-mt-xl">
     <div class="col-10 text-center">
       <p class="text-h6">Background remover interface</p>
+        <!-- --------------------- MOBILE ONLY  (TAKE A PICTURE) ----------------------------------------->
+        <div v-if="$q.screen.lt.md" class="q-my-xl row justify-center">
+          <div class="col-10 col-sm-10 col-xs-12">
+            <q-file
+              filled
+              v-model="picture"
+              accept=".jpg, image/*"
+              label="Choose a picture"
+              @change="showPreview"
+              counter
+            >
+              <template v-slot:prepend>
+                <q-icon name="add_a_photo" @click.stop />
+              </template>
+            </q-file>
+          </div>
+          <div v-if="previewPicture" class="text-center col-10 col-sm-8 col-xs-10 q-my-lg">
+            <img
+              class=""
+              style="width : 100%"
+              :src="previewPicture"
+              alt="before ..."
+            />
+            <q-btn
+              size="sm"
+              class="q-my-lg"
+              color="primary"
+              label="send"
+              :disabled="picture === null ? true : false"
+              @click="sendPicture"
+            />
+
+            <img
+              v-if="updatedPicture"
+              class=""
+              style="width : 100%"
+              :src="updatedPicture"
+              alt="after ..."
+            />
+          </div>
+        </div>
+        <!-- ---------------------  END MOBILE ONLY -------------------------------------->
+        
       <!------------------------------------- ADD A PICTURE ------------------------------------------>
 
       <!------------------------------------------- END ---------------------------------------->
 
-      <!-- --------------------- MOBILE ONLY  (TAKE A PICTURE) ----------------------------------------->
-      <div v-if="$q.screen.lt.md" class="q-my-xl row">
-        <div class="col-12">
-          <q-file
-            filled
-            v-model="picture"
-            accept=".jpg, image/*"
-            label="Choose a picture"
-            @change="showPreview"
-            counter
-          >
-            <template v-slot:prepend>
-              <q-icon name="add_a_photo" @click.stop />
-            </template>
-          </q-file>
-        </div>
-        <div v-if="previewPicture" class="col-12 q-my-lg">
-          <img
-            class=""
-            style="width : 100%"
-            :src="previewPicture"
-            alt="before ..."
-          />
-          <q-btn
-            size="sm"
-            color="primary"
-            label="send"
-            :disabled="picture === null ? true : false"
-            @click="sendPicture"
-          />
 
-          <img
-            v-if="updatedPicture"
-            class=""
-            style="width : 100%"
-            :src="updatedPicture"
-            alt="after ..."
-          />
-        </div>
-      </div>
 
-      <!-- ---------------------  END MOBILE ONLY -------------------------------------->
     </div>
   </div>
 </template>
