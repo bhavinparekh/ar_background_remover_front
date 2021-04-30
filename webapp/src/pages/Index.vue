@@ -18,7 +18,7 @@
               </template>
             </q-file>
           </div>
-          <div v-if="previewPicture" class="text-center col-10 col-sm-8 col-xs-10 q-my-lg">
+          <div v-if="previewPicture" class="text-center col-10 col-sm-7 col-xs-10 q-my-lg">
             <img
               class=""
               style="width : 100%"
@@ -26,7 +26,7 @@
               alt="before ..."
             />
             <q-btn
-              size="sm"
+              size="md"
               class="q-my-lg"
               color="primary"
               label="send"
@@ -45,7 +45,7 @@
         </div>
         <!-- ---------------------  END MOBILE ONLY -------------------------------------->
       <!------------------------------------- ADD A PICTURE ------------------------------------------>
-        <div v-else class="q-pa-md">
+        <div v-else class="q-pa-md q-my-lg">
         <div class="q-gutter-md">
           <q-file
             filled
@@ -59,7 +59,7 @@
               <q-btn round dense flat icon="add" @click.stop />
             </template>
           </q-file>
-         <div v-if="previewPicture" class="col-12 q-my-lg">
+         <div v-if="previewPicture" class="col-12 q-my-lg row justify-center items-center">
           <img
             class=""
             style="width : 30%"
@@ -67,12 +67,12 @@
             alt="before ..."
           />
           <q-btn
-            size="sm"
+            size="md"
             color="primary"
             label="send"
+            class="q-mx-lg"
             :disabled="picture === null ? true : false"
             @click="sendPicture"
-            style="margin-bottom:180px; margin-left:20px;"
           />
           <img
             v-if="updatedPicture"
