@@ -3,8 +3,8 @@
     <div class="col-10 text-center">
       <p class="text-h6">Background remover interface</p>
         <!-- --------------------- MOBILE ONLY  (TAKE A PICTURE) ----------------------------------------->
-        <div v-if="$q.screen.lt.md" class="q-my-xl row justify-center">
-          <div class="col-10 col-sm-10 col-xs-12">
+        <div :class="$q.screen.lt.md? 'q-my-xl row justify-center' :'q-pa-md q-my-lg'">
+          <div :class="$q.screen.lt.md? 'col-10 col-sm-10 col-xs-12' : 'q-gutter-md'">
             <q-file
               filled
               v-model="picture"
@@ -18,34 +18,36 @@
               </template>
             </q-file>
           </div>
-          <div v-if="previewPicture" class="text-center col-10 col-sm-7 col-xs-10 q-my-lg">
-            <img
-              class=""
-              style="width : 100%"
-              :src="previewPicture"
-              alt="before ..."
-            />
-            <q-btn
-              size="md"
-              class="q-my-lg"
-              color="primary"
-              label="send"
-              :disabled="picture === null ? true : false"
-              @click="sendPicture"
-            />
+          <div v-if="previewPicture.length < 1" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
+            <div v-for="(image, index) in previewPicture" :key="index">
+              <img
+                class=""
+                :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
+                :src="image[index]"
+                alt="before ..."
+              />
+              <q-btn
+                size="md"
+                :class="$q.screen.lt.md? 'q-my-lg' : 'q-mx-lg'"
+                color="primary"
+                label="send"
+                :disabled="picture === null ? true : false"
+                @click="sendPicture"
+              />
 
-            <img
-              v-if="updatedPicture"
-              class=""
-              style="width : 100%"
-              :src="updatedPicture"
-              alt="after ..."
-            />
+              <img
+                v-if="updatedPicture.length < 1"
+                class=""
+                :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
+                :src="updatedPicture[index]"
+                alt="after ..."
+              />
+            </div>
           </div>
         </div>
         <!-- ---------------------  END MOBILE ONLY -------------------------------------->
       <!------------------------------------- ADD A PICTURE ------------------------------------------>
-        <div v-else class="q-pa-md q-my-lg">
+<!--         <div v-else class="q-pa-md q-my-lg">
         <div class="q-gutter-md">
           <q-file
             filled
@@ -83,7 +85,7 @@
           />
         </div>  
         </div>
-      </div>
+      </div> -->
       <!------------------------------------------- END ---------------------------------------->
 
     </div>
@@ -98,8 +100,8 @@ export default {
   data() {
     return {
       picture: null,
-      previewPicture: null,
-      updatedPicture: null
+      previewPicture: [],
+      updatedPicture: []
     };
   },
 
@@ -111,18 +113,20 @@ export default {
 
   methods: {
     showPreview() {
+      console.log('INSIDE PREVIEW')
       const reader = new FileReader();
       reader.addEventListener(
         "load",
         () => {
-          this.previewPicture = reader.result;
+          this.previewPicture.push(reader.result);
         },
         false
       );
       reader.readAsDataURL(this.picture);
-      if (this.updatedPicture) {
+      console.log('PREVIEW done', this.previewPicture)
+/*       if (this.updatedPicture) {
         this.updatedPicture = null;
-      }
+      } */
     },
 
     showResult(picture) {
@@ -130,7 +134,7 @@ export default {
       reader.addEventListener(
         "load",
         () => {
-          this.updatedPicture = reader.result;
+          this.updatedPicture.push(reader.result);
         },
         false
       );
