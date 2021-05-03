@@ -10,16 +10,11 @@ Clone the repository
 cd webapp
 ```
 
-### Install the dependencies
+### Build & launch docker
 
 ```bash
-yarn install
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-
-```bash
-yarn start
+docker build . -t fgassama/ar_bg_remove_front
+docker run -p 8080:8080 fgassama/ar_bg_remove_front
 ```
 
 The project will then be available at http://localhost:8080

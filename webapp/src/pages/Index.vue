@@ -18,12 +18,12 @@
               </template>
             </q-file>
           </div>
-          <div v-if="previewPicture.length < 1" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
-            <div v-for="(image, index) in previewPicture" :key="index">
+          <div v-if="previewPicture" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
+            <!-- <div v-for="(image, index) in previewPicture" :key="index"> -->
               <img
                 class=""
                 :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
-                :src="image[index]"
+                :src="previewPicture"
                 alt="before ..."
               />
               <q-btn
@@ -36,13 +36,13 @@
               />
 
               <img
-                v-if="updatedPicture.length < 1"
+                v-if="updatedPicture"
                 class=""
                 :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
-                :src="updatedPicture[index]"
+                :src="updatedPicture"
                 alt="after ..."
               />
-            </div>
+            <!-- </div> -->
           </div>
         </div>
         <!-- ---------------------  END MOBILE ONLY -------------------------------------->
@@ -100,8 +100,8 @@ export default {
   data() {
     return {
       picture: null,
-      previewPicture: [],
-      updatedPicture: []
+      previewPicture: null,
+      updatedPicture: null
     };
   },
 
@@ -118,15 +118,15 @@ export default {
       reader.addEventListener(
         "load",
         () => {
-          this.previewPicture.push(reader.result);
+          this.previewPicture = reader.result;
         },
         false
       );
       reader.readAsDataURL(this.picture);
       console.log('PREVIEW done', this.previewPicture)
-/*       if (this.updatedPicture) {
+      if (this.updatedPicture) {
         this.updatedPicture = null;
-      } */
+      }
     },
 
     showResult(picture) {
@@ -134,7 +134,7 @@ export default {
       reader.addEventListener(
         "load",
         () => {
-          this.updatedPicture.push(reader.result);
+          this.updatedPicture = reader.result;
         },
         false
       );
