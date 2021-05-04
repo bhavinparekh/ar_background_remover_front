@@ -18,8 +18,9 @@
               </template>
             </q-file>
           </div>
-          <div v-if="previewPicture" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
-            <!-- <div v-for="(image, index) in previewPicture" :key="index"> -->
+          
+         <!--<div v-if="previewPicture" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
+            
               <img
                 class=""
                 :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
@@ -42,8 +43,33 @@
                 :src="updatedPicture"
                 alt="after ..."
               />
-            <!-- </div> -->
-          </div>
+            
+          </div>-->
+         <div  v-for="(image, index) in arrayPicturePreview" :key="index" :class="$q.screen.lt.md? 'text-center col-10 col-sm-7 col-xs-10 q-my-lg' : 'col-12 q-my-lg row justify-center items-center'">
+             <img
+                class=""
+                :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
+                :src="image"
+                alt="before ..."
+              />
+              <q-btn
+                v-if="!arrayPictureUpdated[index]"
+                size="md"
+                :class="$q.screen.lt.md? 'q-my-lg' : 'q-mx-lg'"
+                color="primary"
+                label="send"
+                :disabled="picture === null ? true : false"
+                @click="sendPicture"
+              />
+
+              <img
+                v-if="arrayPictureUpdated[index]"
+                class=""
+                :style="$q.screen.lt.md? 'width : 100%' : 'width : 30%'"
+                :src="arrayPictureUpdated[index]"
+                alt="after ..."
+              />
+         </div>
         </div>
         <!-- ---------------------  END MOBILE ONLY -------------------------------------->
       <!------------------------------------- ADD A PICTURE ------------------------------------------>
@@ -101,10 +127,12 @@ export default {
     return {
       picture: null,
       previewPicture: null,
-      updatedPicture: null
+      updatedPicture: null,
+      arrayPicturePreview:[],
+      arrayPictureUpdated:[]
     };
   },
-
+ 
   updated() {
     if (this.picture) {
       this.showPreview();
@@ -114,19 +142,25 @@ export default {
   methods: {
     showPreview() {
       console.log('INSIDE PREVIEW')
+      if(!this.arrayPicturePreview.includes(this.previewPicture))
+      {
       const reader = new FileReader();
       reader.addEventListener(
         "load",
         () => {
           this.previewPicture = reader.result;
+            this.arrayPicturePreview.push(
+               this.previewPicture
+                )
         },
         false
       );
       reader.readAsDataURL(this.picture);
       console.log('PREVIEW done', this.previewPicture)
-      if (this.updatedPicture) {
-        this.updatedPicture = null;
+      }else{
+        console.log('not in inclide');
       }
+      
     },
 
     showResult(picture) {
@@ -135,11 +169,15 @@ export default {
         "load",
         () => {
           this.updatedPicture = reader.result;
+          this.arrayPictureUpdated.push(
+               this.updatedPicture
+                )
         },
         false
       );
       reader.readAsDataURL(picture);
       //reset picture
+      this.previewPicture=null;
       this.picture = null;
     },
 
