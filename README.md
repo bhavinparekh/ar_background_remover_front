@@ -13,8 +13,7 @@ cd webapp
 ### Build & launch docker
 
 ```bash
-docker build . -t fgassama/ar_bg_remove_front
-docker run -p 8080:8080 fgassama/ar_bg_remove_front
+docker-compose up --build
 ```
 
 The project will then be available at http://localhost:8080
